@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg-color: #fff0f3;
+    --env-color: #ff4d6d;
+    --env-dark: #c9184a;
+    --env-light: #ff758f;
+    --text-color: #444;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ---------------- DECORATIVE FLOWERS (SIDES) ---------------- */
+.side-flowers {
+    position: fixed;
+    bottom: -20px;
+    font-size: 7rem;
+    z-index: 10;
+    pointer-events: none;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.1));
+}
+.left-f { left: 20px; }
+.center-f {
+    position:absolute;
+  
+    bottom:-50px;
+}
+.center-f img {
+    height:220px;
+    object-fit: contain;
+     
+}
+.center-f img:nth-child(2) {
+      left:50%;
+     
+}
+.center-f img:nth-child(1),
+.center-f img:nth-child(3) {
+    height:160px;
+    left:10%;
+   
+
+}
+@media(max-width:610px) {
+    .center-f {
+        display:none;
+    }
+}
+@media(max-width:500px) {
+    .left-f,
+    .right-f {
+        display:none;
+    }
+}
+.right-f { right: 20px; }
+
+/* ---------------- TEDDY BEAR ---------------- */
+.teddy-bear {
+    position: absolute;
+    width: 150px; /* Adjust size as needed */
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+    transition: transform 0.8s ease-in-out;
+    opacity: 0;
+}
+
+.valentine-card.open .teddy-bear {
+    transform: translateX(-50%) translateY(-120px);
+    opacity: 1;
+}
+
+/* ---------------- CARD ---------------- */
+.valentine-card {
+    position: relative;
+    width: 400px;
+    height: 280px;
+    cursor: pointer;
+}
+
+/* ---------------- ENVELOPE ---------------- */
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--env-color);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 2;
+}
+
+/* ---------------- LETTER ---------------- */
+.letter {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    opacity:0;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    z-index: 1;
+    transition: transform 0.8s ease-in-out;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Adds scroll if message is too long */
+}
+
+.valentine-card.open .letter {
+    transform: translateX(-50%) translateY(-70px);
+    height: auto;
+    min-height: 300px;
+    z-index: 5;
+    opacity:1;
+}
+@media (max-width:400px) {
+    .valentine-card.open .letter {
+    transform: translateX(-50%) translateY(-30px);
+    }
+}
+
+.letter-content {
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.valentine-card.open .letter-content {
+    opacity: 1;
+    transition-delay: 0.6s;
+}
+
+.letter h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: var(--env-dark);
+    margin: 0 0 10px 0;
+}
+
+.letter p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    margin: 0;
+}
+
+/* ---------------- FLAPS ---------------- */
+.envelope-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+}
+
+.envelope-front::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-bottom: 150px solid var(--env-light);
+    border-radius: 0 0 10px 10px;
+}
+
+.envelope-front::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-left: 200px solid var(--env-dark);
+    border-right: 200px solid var(--env-color);
+    border-top: 140px solid transparent;
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-top: 150px solid var(--env-dark);
+    transform-origin: top;
+    transition: transform 0.6s ease-in-out;
+    z-index: 6;
+}
+
+.valentine-card.open .flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+    
+}
+
+/* ---------------- HINT & EFFECTS ---------------- */
+.hint {
+    position: absolute;
+    bottom: -50px;
+    width: 100%;
+    text-align: center;
+    color: var(--env-dark);
+    font-weight: bold;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-10px);}
+}
+
+.sparkle {
+    position: absolute;
+    pointer-events: none;
+    animation: flyUp 3s linear forwards;
+}
+
+@keyframes flyUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="side-flowers left-f">🌸🌹🌷</div>
+<div class="side-flowers center-f">
+    <img src="/images/image-removebg-preview.png"/>
+    <img src="/images/image-removebg-preview.png"/>
+    <img src="/images/image-removebg-preview.png"/>
+</div>
+<div class="side-flowers right-f">🌷🌹🌸</div>
+
+<div class="valentine-card" id="card">
+    <img src="https://img.freepik.com/free-vector/adorable-baby-bear-illustration_1308-181868.jpg?t=st=1770815830~exp=1770819430~hmac=0bed6e1273623263353fa727997bc55fce996be219c03cde2ea3063317d643d1&w=1480" alt="Teddy" class="teddy-bear" id="teddy">
+    
+    <div class="flap"></div>
+
+    <div class="envelope">
+        <div class="letter">
+            <div class="letter-content">
+                <h2>Happy Valentine’s Day 💖</h2>
+                <p>
+                    Happy valentines day darling, wala koy mahuna hunaan mahatag sa imo thats why kani ang nag come up sakong mind hahaha. 
+                    <br><br>
+                    Anyways just keep doing what you think is right and always believe in yourself kay remember imong goal mahimong rich tita AHAHAHHAHA. 
+                    <br><br>
+                    Always take care of yourself and always remember nga if feeling nimo wa kay maistoryahan, naa ra ko diri maminaw. And also if dili japon kaa, edi don't hahaha pero naa japon si God you can talk to him kay he's always available man always satoa if naa tay problem and need natog kaistorya. 
+                    <br><br>
+                    Thats all and happy valentines day darling! Mwwuaahhh!
+                </p>
+            </div>
+        </div>
+        <div class="envelope-front"></div>
+    </div>
+
+    <div class="hint">Click to Open 💌</div>
+</div>
+
+<script>
+const card = document.getElementById('card');
+
+card.addEventListener('click', () => {
+    card.classList.toggle('open');
+    
+    if (card.classList.contains('open')) {
+        spawnSparkles();
+    }
+});
+
+function spawnSparkles() {
+    for(let i=0; i<15; i++) {
+        setTimeout(() => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = ['✨', '💖', '❤️', '🌸'][Math.floor(Math.random() * 4)];
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = '100vh';
+            sparkle.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 3000);
+        }, i * 100);
+    }
+}
+</script>
+
+</body>
+</html>
